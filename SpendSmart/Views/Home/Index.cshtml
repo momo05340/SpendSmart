@@ -4,19 +4,47 @@
     ViewData["Title"] = "Home Page";
     var username = ViewBag.Username;
     var email = ViewBag.Email;
+    List<Expense> expenses = Model ?? new List<Expense>();
+
     // var months = ViewBag.Months;
     // var monthlyExpenses = ViewBag.MonthlyExpenses;
 }
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
 
-@model List<Expense>
+@model List<Expense> 
 
 
 <div class="text-center">
     <h1 class="display-4">Welcome @username</h1>
    @*  <a asp-controller="Home" asp-action="Expenses" class="btn btn-primary">Overview</a> *@
-    <a asp-controller="Home" asp-action="CreateEditExpense" class="btn btn-secondary">Add Gastos</a>
-    <a asp-controller="Home" asp-action="CreateEditBudget" class="btn btn-secondary">Add Budget</a>
+   <a asp-controller="Home" asp-action="CreateEditExpense" class="btn btn-secondary" >Add Gastos</a>
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            var showModal = '@TempData["ShowExpenseModal"]' === 'True';
+            if (showModal) {
+                var myModal = new bootstrap.Modal(document.getElementById('expenseModal'));
+                myModal.show();
+            }
+        });
+    </script>
+    <a asp-controller="Home" asp-action="CreateEditBudget" class="btn btn-secondary">Add Budget</a> 
+    <script>
+        window.addEventListener('DOMContentLoaded', (event) => {
+            var showModal = '@TempData["ShowbudgetModal"]' === 'True';
+            if (showModal) {
+                var myModal = new bootstrap.Modal(document.getElementById('budgetModal'));
+                myModal.show();
+            }
+        });
+    </script>
+@* 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#expenseModal">
+        Create / Edit Expense
+    </button>
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#budgetModal">
+        Create / Edit Budget
+    </button> *@
 </div>
 
 
