@@ -1,0 +1,43 @@
+﻿@{
+    Layout = null;
+}
+@model SpendSmart.Models.User;
+
+
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/SpendSmart.styles.css" asp-append-version="true" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container container-fluid d-flex justify-content-center align-items-center h-100 ">
+
+    
+<form method="post" asp-action="Register" asp-controller="Account" >
+        <h2>Register</h2>
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Username, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    </div>
+
+    <div class="mb-3">
+        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
+</div>
+<!-- Notification messages -->
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success mt-3">@ViewBag.Success</div>
+}
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
+}

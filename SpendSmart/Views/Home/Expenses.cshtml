@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+    var username = ViewBag.Username;
+    var email = ViewBag.Email;
+}
+
+@model List<Expense>
+
+
+<div class="text-center">
+    <h1 class="display-4">Expenses</h1>
+    <br />
+    <hr />
+    <H3>
+        Total Expenses @ViewBag.Expenses
+        <br/>
+        Total count @ViewBag.Count
+        <br/>
+        <a asp-controller="Home" asp-action="CreateEditExpense" class="btn btn-secondary">ADD Expenses</a>
+    </H3>
+
+   <br />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Value
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Date From
+                </th>
+                <th>
+                    Date To
+                </th>
+                <th>
+                    Actions
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @{
+                foreach (var expense in Model)
+                {
+                    <tr>
+                        <td>
+                            @expense.Id
+                        </td>
+                        <td>
+                            @expense.Value  
+                        </td>
+                        <td>
+                            @expense.Description
+                        </td>
+                        <td>
+                            @expense.Datefrom.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @expense.Dateto.ToString("yyyy-MM-dd")
+                        </td>
+                        <td>
+                            @expense.DateCreated.ToString("yyyy-MM-dd HH:mm:ss")
+                        </td>
+                        <td>
+                            <a asp-action="CreateEditExpense" asp-route-id="@expense.Id">Edit</a>
+                            <a asp-action="DeleteExpense" asp-route-id="@expense.Id">Delete</a>
+                        </td>
+                        
+
+
+                    </tr>
+
+                }
+
+
+            }
+
+        </tbody>
+    </table>
+
+
+
+</div>
+
+

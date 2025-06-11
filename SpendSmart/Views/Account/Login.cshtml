@@ -1,0 +1,56 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login · Bootstrap v5.3</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/bootstrap-5.3.6-examples/sign-in/sign-in.css" />
+</head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+
+    <main class="form-signin w-100 m-auto">
+        <form method="post" asp-action="Login" asp-controller="Account">
+           @*  <img class="mb-4" src="c:\users\rarom\documents\trainingsample\mvcloginsystem\views\account\aimslogo.png" alt="Logo" width="72" height="57"> *@
+            <img class="mb-4" src="@Url.Content("~/images/aimslogo.png")" alt="Logo" width="72" height="57" />
+
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating mb-2">
+                <input type="text" name="username" class="form-control" id="floatingInput" placeholder="name@example.com" required />
+                <label for="floatingInput">Username</label>
+            </div>
+
+            <div class="form-floating mb-2">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password" required />
+                <label for="floatingPassword">Password</label>
+            </div>
+
+            <div class="form-check text-start my-3">
+                <input class="form-check-input" type="checkbox" value="remember-me" id="rememberMe" />
+                <label class="form-check-label" for="rememberMe">
+                    Remember me
+                </label>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">Login</button>
+
+            <p class="mt-5 mb-3 text-body-secondary">&copy; 2017–2025</p>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger mt-2">@ViewBag.Error</div>
+            }
+
+            <p class="mt-3">Don't have an account? <a asp-action="Register" asp-controller="Account">Register here</a></p>
+        </form>
+    </main>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
