@@ -14,6 +14,70 @@
 
 
 </head>
+<<<<<<< HEAD
+
+<body class="d-flex flex-column min-vh-100">
+    <!-- Sidebar Toggle (mobile only) -->
+    <button class="btn btn-primary d-md-none m-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar">
+        ☰ Menu
+    </button>
+    <div class="d-flex flex-grow-1">
+        <!-- Sidebar -->
+        <div class="offcanvas-md offcanvas-start bg-light border-end" tabindex="-1" id="sidebar" aria-labelledby="sidebarLabel" style="width: 250px;">
+            <div class="offcanvas-header d-md-none">
+                <h5 class="offcanvas-title" id="sidebarLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body d-flex flex-column p-3">
+                <a class="navbar-brand mb-3 fs-4 text-dark text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">Spend-Monitoring</a>
+                <hr>
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Expenses">Expenses</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Budget">Budget</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </li>
+                    <li>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Sign Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Main content (fills remaining space) -->
+        <div class="flex-grow-1 p-3" id="mainContent">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+   
+
+    <!-- Footer -->
+    <footer class="border-top footer text-muted mt-auto">
+        <div class="container">
+            &copy; 2025 - Spend Wise :p - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Responsive Fix -->
+    
+</body>
+
+=======
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
@@ -53,4 +117,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+>>>>>>> 84d3cb49d6a6a1009da9d321757d6276c7d67eef
 </html>
