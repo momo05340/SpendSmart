@@ -1,43 +1,55 @@
-﻿@{
+﻿
+
+
+@{
     Layout = null;
+    <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet">
 }
-@model SpendSmart.Models.User;
+<section>
+    <div class="page-header min-vh-75">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-5 col-md-6 d-flex flex-column mx-auto">
+                    <div class="card card-plain mt-8">
+                        <div class="card-header pb-0 text-left bg-transparent">
+                            <h3 class="font-weight-bolder text-info text-gradient">Register</h3>
+                            <p class="mb-0">Enter your credentials to register</p>
+                        </div>
+                        <div class="card-body">
+                            <form method="post" asp-action="Register" asp-controller="Account">
+                                <label>Username</label>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="Username-addon" required>
+                                </div>
+                                <label>Password</label>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Password" aria-label="Password" aria-describedby="password-addon" required>
+                                </div>
 
-
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/SpendSmart.styles.css" asp-append-version="true" />
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<div class="container container-fluid d-flex justify-content-center align-items-center h-100 ">
-
-    
-<form method="post" asp-action="Register" asp-controller="Account" >
-        <h2>Register</h2>
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Username, new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                                <label>Email</label>
+                                <div class="mb-3">
+                                    <input type="email" class="form-control" placeholder="Email" aria-label="Email" aria-describedby="email-addon" required>
+                                </div>
+                                
+                                <div class="text-center">
+                                    <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Sign in</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                            <p class="mb-4 text-sm mx-auto">
+                                You already have an account?
+                                <a asp-action="Login" asp-controller="Account" class="text-info text-gradient font-weight-bold">Login</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="oblique position-absolute top-0 h-100 d-md-block d-none me-n8">
+                        <div class="oblique-image bg-cover position-absolute fixed-top ms-auto h-100 z-index-0 ms-n6" style="background-image:url('../assets/img/curved-images/curved6.jpg')"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Password, new { @class = "form-label" })
-        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-    </div>
-
-    <div class="mb-3">
-        @Html.LabelFor(m => m.Email, new { @class = "form-label" })
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-    </div>
-
-    <button type="submit" class="btn btn-primary">Register</button>
-</form>
-</div>
-<!-- Notification messages -->
-@if (ViewBag.Success != null)
-{
-    <div class="alert alert-success mt-3">@ViewBag.Success</div>
-}
-@if (ViewBag.Error != null)
-{
-    <div class="alert alert-danger mt-3">@ViewBag.Error</div>
-}
+</section>

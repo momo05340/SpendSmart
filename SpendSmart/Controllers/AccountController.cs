@@ -39,6 +39,7 @@ namespace SpendSmart.Controllers
                 // Store session data when login is successful
                 HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetString("Email", user.Email);
+       
                 return RedirectToAction("Index", "Home");
             }
 

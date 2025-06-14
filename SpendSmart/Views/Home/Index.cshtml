@@ -1,212 +1,306 @@
 ﻿@using Newtonsoft.Json
 
 @{
-    ViewData["Title"] = "Home Page";
-    var username = ViewBag.Username;
-    var email = ViewBag.Email;
-    List<Expense> expenses = Model ?? new List<Expense>();
+	ViewData["Title"] = "Home Page";
+	var username = ViewBag.Username;
+	var email = ViewBag.Email;
+	List<Expense> expenses = Model ?? new List<Expense>();
 
-    // var months = ViewBag.Months;
-    // var monthlyExpenses = ViewBag.MonthlyExpenses;
+	// var months = ViewBag.Months;
+	// var monthlyExpenses = ViewBag.MonthlyExpenses;
 }
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-
-@model List<Expense> 
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome @username</h1>
-   @*  <a asp-controller="Home" asp-action="Expenses" class="btn btn-primary">Overview</a> *@
-   <a asp-controller="Home" asp-action="CreateEditExpense" class="btn btn-secondary" >Add Gastos</a>
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            var showModal = '@TempData["ShowExpenseModal"]' === 'True';
-            if (showModal) {
-                var myModal = new bootstrap.Modal(document.getElementById('expenseModal'));
-                myModal.show();
-            }
-        });
-    </script>
-    <a asp-controller="Home" asp-action="CreateEditBudget" class="btn btn-secondary">Add Budget</a> 
-    <script>
-        window.addEventListener('DOMContentLoaded', (event) => {
-            var showModal = '@TempData["ShowbudgetModal"]' === 'True';
-            if (showModal) {
-                var myModal = new bootstrap.Modal(document.getElementById('budgetModal'));
-                myModal.show();
-            }
-        });
-    </script>
-@* 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#expenseModal">
-        Create / Edit Expense
-    </button>
+@model List<Expense>
 
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#budgetModal">
-        Create / Edit Budget
-    </button> *@
+<div class="container-fluid py-4">
+	<div class="row">
+		<h1 class="display-4">Welcome @username</h1>
+		<div class="col-lg-6 col-12">
+			<div class="row">
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="card">
+						<span class="mask bg-primary opacity-10 border-radius-lg"></span>
+						<div class="card-body p-3 position-relative">
+							<div class="row">
+								<div class="col-8 text-start">
+									<div class="icon icon-shape bg-grey shadow text-center border-radius-2xl">
+										<i class="fas fa-shopping-cart card-icon" aria-hidden="true"></i>
+
+									</div>
+									<h5 class="text-white font-weight-bolder mb-0 mt-3">
+										@ViewBag.Budget
+									</h5>
+									<span class="text-white text-sm">Budget</span>
+								</div>
+								<div class="col-4">
+									<div class="dropdown text-end mb-6">
+										<a href="javascript:;" class="cursor-pointer" id="dropdownUsers1" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fa fa-ellipsis-h text-white" aria-hidden="true"></i>
+										</a>
+										<ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers1" style="">
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+										</ul>
+									</div>
+									<p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="card">
+						<span class="mask bg-success opacity-10 border-radius-lg"></span>
+						<div class="card-body p-3 position-relative">
+							<div class="row">
+								<div class="col-8 text-start">
+									<div class="icon icon-shape bg-grey shadow text-center border-radius-2xl">
+										<i class="fas fa-dollar-sign card-icon"></i>
+									</div>
+									<h5 class="text-white font-weight-bolder mb-0 mt-3">
+										@ViewBag.Expenses
+									</h5>
+									<span class="text-white text-sm">Total Expenses</span>
+								</div>
+								<div class="col-4">
+									<div class="dropdown text-end mb-6">
+										<a href="javascript:;" class="cursor-pointer" id="dropdownUsers1" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fa fa-ellipsis-h text-white" aria-hidden="true"></i>
+										</a>
+										<ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers1" style="">
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+										</ul>
+									</div>
+									<p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+55%</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+			<div class="row mt-4">
+				<div class="col-lg-6 col-md-6 col-12">
+					<div class="card">
+						<span class="mask bg-dark opacity-10 border-radius-lg"></span>
+						<div class="card-body p-3 position-relative">
+							<div class="row">
+								<div class="col-8 text-start">
+									<div class="icon icon-shape bg-grey shadow text-center border-radius-2xl">
+										<i class="fas fa-boxes card-icon" aria-hidden="true"></i>
+									</div>
+									<h5 class="text-white font-weight-bolder mb-0 mt-3">
+										@ViewBag.Count
+									</h5>
+									<span class="text-white text-sm">Category</span>
+								</div>
+								<div class="col-4">
+									<div class="dropdown text-end mb-6">
+										<a href="javascript:;" class="cursor-pointer" id="dropdownUsers3" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fa fa-ellipsis-h text-white" aria-hidden="true"></i>
+										</a>
+										<ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers3">
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+										</ul>
+									</div>
+									<p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+15%</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-12 mt-4 mt-md-0">
+					<div class="card">
+						<span class="mask bg-dark opacity-10 border-radius-lg"></span>
+						<div class="card-body p-3 position-relative">
+							<div class="row">
+								<div class="col-8 text-start">
+									<div class="icon icon-shape bg-grey shadow text-center border-radius-2xl">
+										<i class="fas fa-shopping-cart card-icon" aria-hidden="true"></i>
+									</div>
+									<h5 class="text-white font-weight-bolder mb-0 mt-3">
+										@ViewBag.TotalNatira
+									</h5>
+									<span class="text-white text-sm">Balance</span>
+								</div>
+								<div class="col-4">
+									<div class="dropstart text-end mb-6">
+										<a href="javascript:;" class="cursor-pointer" id="dropdownUsers4" data-bs-toggle="dropdown" aria-expanded="false">
+											<i class="fa fa-ellipsis-h text-white" aria-hidden="true"></i>
+										</a>
+										<ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownUsers4">
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Another action</a></li>
+											<li><a class="dropdown-item border-radius-md" href="javascript:;">Something else here</a></li>
+										</ul>
+									</div>
+									<p class="text-white text-sm text-end font-weight-bolder mt-auto mb-0">+90%</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-12 mt-4 mt-lg-0">
+			<div class="card shadow h-100">
+				<div class="card-header pb-0 p-3">
+					<h6 class="mb-0">Reviews</h6>
+				</div>
+				<div class="card-body pb-0 p-3">
+					<ul class="list-group">
+						<li class="list-group-item border-0 d-flex align-items-center px-0 mb-0">
+							<div class="w-100">
+								<div class="d-flex mb-2">
+									<span class="me-2 text-sm font-weight-bold text-dark">Positive Reviews</span>
+									<span class="ms-auto text-sm font-weight-bold">80%</span>
+								</div>
+								<div>
+									<div class="progress progress-md">
+										<div class="progress-bar bg-primary w-80" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+							<div class="w-100">
+								<div class="d-flex mb-2">
+									<span class="me-2 text-sm font-weight-bold text-dark">Neutral Reviews</span>
+									<span class="ms-auto text-sm font-weight-bold">17%</span>
+								</div>
+								<div>
+									<div class="progress progress-md">
+										<div class="progress-bar bg-primary w-10" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="list-group-item border-0 d-flex align-items-center px-0 mb-2">
+							<div class="w-100">
+								<div class="d-flex mb-2">
+									<span class="me-2 text-sm font-weight-bold text-dark">Negative Reviews</span>
+									<span class="ms-auto text-sm font-weight-bold">3%</span>
+								</div>
+								<div>
+									<div class="progress progress-md">
+										<div class="progress-bar bg-primary w-5" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="card-footer pt-0 p-3 d-flex align-items-center">
+
+
+
+
+					<p class="text-sm">
+						More than <b>1,500,000</b> developers used Creative Tim's products and over <b>700,000</b> projects
+						were created.
+					</p>
+				</div>
+				<div class="w-40 text-end">
+					<a class="btn btn-dark mb-0 text-end" href="javascript:;">View all reviews</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row mt-4">
+		<div class="col-lg-12">
+			<div class="card z-index-2">
+				<div class="card-header pb-0">
+					<h6>Sales overview</h6>
+					<p class="text-sm">
+						<i class="fa fa-arrow-up text-success" aria-hidden="true"></i>
+						<span class="font-weight-bold">4% more</span> in 2021
+					</p>
+				</div>
+				<div class="card-body p-3">
+					<div class="chart">
+						<canvas id="expensesChart" height="100"></canvas>
+						@* <canvas id="chart-line" class="chart-canvas" height="450" width="1149" style="display: block; box-sizing: border-box; height: 300px; width: 766px;"></canvas> *@
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
 </div>
 
 
 
 
 
+@section Scripts {
+	<script src="~/assets/js/plugins/chartjs.min.js"></script>
+	<script src="~/assets/js/plugins/jkanban/jkanban.js"></script>
+	<script src="~/assets/js/plugins/fullcalendar.min.js"></script>
+	<script>
+		window.addEventListener('DOMContentLoaded', (event) => {
+			var showModal = '@TempData["ShowExpenseModal"]' === 'True';
+			if (showModal) {
+				var myModal = new bootstrap.Modal(document.getElementById('expenseModal'));
+				myModal.show();
+			}
+		});
+	</script>
+	<script>
+		window.addEventListener('DOMContentLoaded', (event) => {
+			var showModal = '@TempData["ShowbudgetModal"]' === 'True';
+			if (showModal) {
+				var myModal = new bootstrap.Modal(document.getElementById('budgetModal'));
+				myModal.show();
+			}
+		});
+	</script>
+	<script>
+		const labels = @Html.Raw(JsonConvert.SerializeObject(ViewBag.categories ?? new List<string>()));
+		const expensesData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.EXP ?? new List<decimal>()));
 
-@* <main class="container-fluid">
-    <!-- Dashboard Stats -->
-    <div class="row mb-4 justify-content-center">
-        <div class="col-md-4">
-            <div class="card text-white bg-primary shadow-sm">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h5 class="card-title">Budget</h5>
-                        <p class="card-text">@ViewBag.Budget</p>
-                    </div>
-                    <i class="fas fa-shopping-cart card-icon"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 justify-content-center">
-            <div class="card text-white bg-success shadow-sm">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h5 class="card-title">Total Expenses</h5>
-                        <p class="card-text">@ViewBag.Expenses</p>
-                    </div>
-                    <i class="fas fa-dollar-sign card-icon"></i>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 justify-content-center">
-            <div class="card text-white bg-warning shadow-sm">
-                <div class="card-body d-flex align-items-center justify-content-between">
-                    <div>
-                        <h5 class="card-title">Category</h5>
-                        <p class="card-text">@ViewBag.Count</p>
-                    </div>
-                    <i class="fas fa-boxes card-icon"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
- 
-    <!-- Razor View -->
-</main> *@
-
-<body>
-    <main class="container-fluid py-4">
-        <!-- Dashboard Stats -->
-        <div class="row g-3 justify-content-center">
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card text-white bg-primary shadow-sm">
-                    <div class="card-body d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="card-title">Budget</h5>
-                            <p class="card-text">@ViewBag.Budget</p>
-                        </div>
-                        <i class="fas fa-shopping-cart card-icon"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card text-white bg-success shadow-sm">
-                    <div class="card-body d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="card-title">Total Expenses</h5>
-                            <p class="card-text">@ViewBag.Expenses</p>
-                        </div>
-                        <i class="fas fa-dollar-sign card-icon"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card text-white bg-warning shadow-sm">
-                    <div class="card-body d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="card-title">Category</h5>
-                            <p class="card-text">@ViewBag.Count</p>
-                        </div>
-                        <i class="fas fa-boxes card-icon"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="card text-white bg-black shadow-sm">
-                    <div class="card-body d-flex align-items-center justify-content-between">
-                        <div>
-                            <h5 class="card-title">Total na Tira</h5>
-                            <p class="card-text">@ViewBag.TotalNatira</p>
-                        </div>
-                        <i class="fas fa-shopping-cart card-icon"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- Interactive Chart Section -->
-        <div class="row mt-5">
-            <div class="col-12">
-                <div class="card shadow-sm">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">Monthly Expenses Overview</h5>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="expensesChart" height="100"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Bootstrap, Font Awesome, Chart.js Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script>
-        const labels = @Html.Raw(JsonConvert.SerializeObject(ViewBag.categories ?? new List<string>()));
-        const expensesData = @Html.Raw(JsonConvert.SerializeObject(ViewBag.EXP ?? new List<decimal>()));
-
-        const ctx = document.getElementById('expensesChart').getContext('2d');
-        const expensesChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: 'Expenses ($)',
-                    data: expensesData,
-                    backgroundColor: 'rgba(54, 162, 235, 0.6)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    tooltip: {
-                        mode: 'index',
-                        intersect: false
-                    },
-                    legend: {
-                        display: true,
-                        position: 'top'
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        ticks: {
-                            callback: value => `$${value}`
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-    <canvas id="expensesChart" width="400" height="200"></canvas>
-
-</body>
+		const ctx = document.getElementById('expensesChart').getContext('2d');
+		const expensesChart = new Chart(ctx, {
+			type: 'bar',
+			data: {
+				labels: labels,
+				datasets: [{
+					label: 'Expenses ($)',
+					data: expensesData,
+					backgroundColor: 'rgba(54, 162, 235, 0.6)',
+					borderColor: 'rgba(54, 162, 235, 1)',
+					borderWidth: 1
+				}]
+			},
+			options: {
+				responsive: true,
+				maintainAspectRatio: false,
+				plugins: {
+					tooltip: {
+						mode: 'index',
+						intersect: false
+					},
+					legend: {
+						display: true,
+						position: 'top'
+					}
+				},
+				scales: {
+					y: {
+						beginAtZero: true,
+						ticks: {
+							callback: value => `$${value}`
+						}
+					}
+				}
+			}
+		});
+	</script>
+}

@@ -1,0 +1,54 @@
+﻿<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur"
+	 navbar-scroll="true">
+	<div class="sidenav-toggler sidenav-toggler-inner d-xl-block d-none me-2 ">
+		<a href="javascript:;" class="nav-link text-body p-0">
+			<div class="sidenav-toggler-inner">
+				<i class="sidenav-toggler-line"></i>
+				<i class="sidenav-toggler-line"></i>
+				<i class="sidenav-toggler-line"></i>
+			</div>
+		</a>
+	</div>
+	<div class="container-fluid py-1 px-3">
+
+
+		<div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
+			<div class="ms-md-auto pe-md-3 d-flex align-items-center">
+				<div class="input-group">
+				</div>
+			</div>
+			<ul class="navbar-nav  justify-content-end">
+
+
+				<li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+					<a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
+						<div class="sidenav-toggler-inner">
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+							<i class="sidenav-toggler-line"></i>
+						</div>
+					</a>
+				</li>
+				
+				<li class="nav-item dropdown px-2 d-flex align-items-center">
+					<a href="javascript:;" class="nav-link text-body p-0" id="dropdownMenuButton" data-bs-toggle="dropdown"
+					   aria-expanded="false">
+						<i class="fa fa-user me-sm-1" aria-hidden="true"></i>
+						<span class="d-sm-inline d-none">Profile</span>
+					</a>
+					<ul class="dropdown-menu  dropdown-menu-end  px-2 py-3 me-sm-n4" aria-labelledby="dropdownMenuButton">
+						
+						<li>
+						
+							<a class="dropdown-item border-radius-md" asp-controller="Account" asp-action="Logout">
+								<i class="px-2 fa-solid fa-arrow-right-from-bracket" aria-hidden="true"></i>Logout
+							</a>
+						</li>
+						
+					</ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+</nav>

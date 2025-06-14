@@ -1,0 +1,16 @@
+
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+
+    string pageTitle = ViewBag.PageTitle ?? action;
+    string sections = ViewBag.Section ?? controller;
+}
+<div class="ms-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
+            <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="@Url.Action("Index", controller)">@sections</a></li>
+            <li class="breadcrumb-item text-sm text-dark active" aria-current="page">@((pageTitle ?? "").Equals("Index") ? "Dashboard" : pageTitle)</li>
+        </ol>
+    </nav>
+</div>

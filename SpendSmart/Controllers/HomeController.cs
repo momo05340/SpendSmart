@@ -58,7 +58,7 @@ namespace SpendSmart.Controllers
             ViewBag.Budget = totalBudgets;
             ViewBag.TotalNatira = totalnatira; // Total remaining after expenses
             ViewData["Expenses"] = totalExpenses;
-
+            ViewData["Breadcrumbs"] = "Dashboard";
 
 
             var categories = _context.Expenses
@@ -124,7 +124,6 @@ namespace SpendSmart.Controllers
             // 4. Pass data to the view
             ViewBag.Expenses = totalExpenses;
             ViewBag.Count = countprod;
-            ViewData["Expenses"] = totalExpenses;
             ViewBag.Username = username;
 
             return View(allexpenses);
@@ -172,14 +171,22 @@ namespace SpendSmart.Controllers
 
         //    return View(allexpenses);
         //}
+        [HttpPost]
         public IActionResult DeleteExpense(int id)
         {
-            // Find the expense by id   
-            var expenseInDb = _context.Expenses.SingleOrDefault(expense => expense.Id == id);
+            
+            var expense = _context.Expenses.FirstOrDefault(e => e.Id == id);
 
-            _context.Expenses.Remove(expenseInDb);
-            _context.SaveChanges(); 
+            if (expense == null)
+            {
+                
+                return NotFound();
+            }
 
+            _context.Expenses.Remove(expense);
+            _context.SaveChanges();
+
+           
             return RedirectToAction("Expenses");
         }
 
