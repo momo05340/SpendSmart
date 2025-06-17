@@ -2,6 +2,13 @@
     Layout = null;
     <link id="pagestyle" href="../assets/css/soft-ui-dashboard.css?v=1.1.0" rel="stylesheet">
 }
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert" id="successAlert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
 <section>
     <div class="page-header min-vh-75">
         <div class="container">
@@ -48,3 +55,14 @@
         </div>
     </div>
 </section>
+@section Scripts {
+    <script>
+        setTimeout(function () {
+            const alert = document.getElementById('successAlert');
+            if (alert) {
+                alert.classList.remove('show');
+                alert.classList.add('fade');
+            }
+        }, 5000);
+    </script>
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using SpendSmart.Models;// Assuming you have an Enums namespace for roletype
 
 namespace SpendSmart.Models
 {
@@ -17,8 +18,11 @@ namespace SpendSmart.Models
         [Required(ErrorMessage = "Password is required.")]
         [DataType(DataType.Password)]
         public required string Password { get; set; }
+        public string? userrole { get; set; } = "User";
 
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public DateTime DateUpdated { get; set; } = DateTime.Now;
     }
+
+    
 }

@@ -6,8 +6,7 @@
 	var email = ViewBag.Email;
 	List<Expense> expenses = Model ?? new List<Expense>();
 
-	// var months = ViewBag.Months;
-	// var monthlyExpenses = ViewBag.MonthlyExpenses;
+
 }
 
 
@@ -29,7 +28,7 @@
 
 									</div>
 									<h5 class="text-white font-weight-bolder mb-0 mt-3">
-										@ViewBag.Budget
+										@((ViewBag.Budget as decimal?)?.ToString("C") ?? "₱0.00")
 									</h5>
 									<span class="text-white text-sm">Budget</span>
 								</div>
@@ -60,7 +59,7 @@
 										<i class="fas fa-dollar-sign card-icon"></i>
 									</div>
 									<h5 class="text-white font-weight-bolder mb-0 mt-3">
-										@ViewBag.Expenses
+										@((ViewBag.Expenses as decimal?)?.ToString("C") ?? "₱0.00")
 									</h5>
 									<span class="text-white text-sm">Total Expenses</span>
 								</div>
@@ -125,7 +124,7 @@
 										<i class="fas fa-shopping-cart card-icon" aria-hidden="true"></i>
 									</div>
 									<h5 class="text-white font-weight-bolder mb-0 mt-3">
-										@ViewBag.TotalNatira
+										@((ViewBag.TotalNatira as decimal?)?.ToString("C") ?? "₱0.00")
 									</h5>
 									<span class="text-white text-sm">Balance</span>
 								</div>

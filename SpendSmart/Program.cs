@@ -47,6 +47,8 @@ namespace SpendSmart
                     return;
                 }
             }
+
+
             app.UseHttpsRedirection();
             app.UseRouting();
 

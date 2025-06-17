@@ -29,9 +29,10 @@ namespace SpendSmart.Controllers
             ViewBag.Username = HttpContext.Session.GetString("Username");
             ViewBag.Email = HttpContext.Session.GetString("Email");
             var username = HttpContext.Session.GetString("Username");
-
+            var role = HttpContext.Session.GetString("userrole");
+            var userId = HttpContext.Session.GetString("UserId");
             //var allexpenses = _context.Expenses.ToList();
-           // var allbudgets = _context.Budgets.ToList();
+            // var allbudgets = _context.Budgets.ToList();
 
             //Filter expes and budgets by the current user
             var allexpenses = _context.Expenses

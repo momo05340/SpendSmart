@@ -24,31 +24,43 @@ namespace SpendSmart.Controllers
 
         // POST: Account/Login
         [HttpPost]
+
         public async Task<IActionResult> Login(string username, string password)
         {
-
-
-
-            // Find user in the database matching the provided credentials
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.Username == username && u.Password == password);
 
-
             if (user != null)
             {
-                // Store session data when login is successful
                 HttpContext.Session.SetString("Username", user.Username);
                 HttpContext.Session.SetString("Email", user.Email);
-       
+                HttpContext.Session.SetString("userrole", user.userrole ?? "User");
+
+                // Optional: redirect based on role
+                if (user.userrole == "Admin")
+                    ViewBag.Username = user.Username;
+                ViewBag.Email = user.Email;
+                ViewBag.UserRole = user.userrole; // Default to "User" if null
+                ViewBag.UserId = user.Id.ToString(); // Store Us
+
+                return RedirectToAction("Index", "Admin");
+
+
+
+
+               
+                ViewBag.Username = user.Username;
+                ViewBag.Email = user.Email;
+                ViewBag.UserRole = user.userrole ?? "User"; // Default to "User" if null
+                ViewBag.UserId = user.Id.ToString(); // Store UserId in ViewBag for later use
                 return RedirectToAction("Index", "Home");
             }
 
-            var namne = _context.Users.FirstOrDefault(u => u.Username == username);
-            // Display error if login fails
             ViewBag.Username = username;
             ViewBag.Error = "Invalid login credentials.";
             return View();
         }
+       
 
         // GET: Account/Register
         public IActionResult Register()
@@ -65,6 +77,7 @@ namespace SpendSmart.Controllers
                 // Add new user to the database
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Registered successfully. Please log in.";
                 return RedirectToAction("Login");
             }
 
