@@ -1,24 +1,30 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpendSmart.Models;
 using System.Globalization;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+
 namespace SpendSmart.Controllers
 {
-    public class DashboardController : Controller
+    [Authorize(AuthenticationSchemes = "MyCookieScheme")]
+   
+    public class Dashboard1Controller : Controller
     {
         private readonly AppDBContext _context;
-        public DashboardController(AppDBContext context)
+
+        public Dashboard1Controller(AppDBContext context)
         {
             _context = context;
         }
 
         public IActionResult Index()
         {
-            // Example: Assume you have an Expenses table with a Date and Amount field
+            var userId = User.FindFirst("UserId")?.Value;
+            if (string.IsNullOrEmpty(userId)) return Unauthorized();
+
             var groupedData = _context.Expenses
+                .Where(e => e.UserId == userId)
                 .GroupBy(e => e.DateCreated.Month)
                 .Select(g => new
                 {

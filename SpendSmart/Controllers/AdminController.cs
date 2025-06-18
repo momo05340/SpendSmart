@@ -1,81 +1,59 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SpendSmart.Models;
+using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SpendSmart.Controllers
 {
+    [Authorize]
+
     public class AdminController : Controller
     {
-        private readonly ILogger<AdminController> _logger;
-        // Injecting the AppDBContext to interact with the database
         private readonly AppDBContext _context;
 
-        public AdminController(ILogger<AdminController> logger, AppDBContext context)
+        public AdminController(AppDBContext context)
         {
-            _logger = logger;
             _context = context;
         }
 
         public IActionResult Index()
         {
-             ViewBag.Username = HttpContext.Session.GetString("Username");
-            ViewBag.Email = HttpContext.Session.GetString("Email");
-            ViewBag.UserRole = HttpContext.Session.GetString("userrole");// Default to "User" if null
-            var username = HttpContext.Session.GetString("Username");
-            var role = HttpContext.Session.GetString("userrole");
-            var userId = HttpContext.Session.GetString("UserId");
+            // Get user ID from claims
+            var userId = User.FindFirst("UserId")?.Value;
 
-            if (string.IsNullOrEmpty(role) || role != "Admin")
+            if (string.IsNullOrEmpty(userId))
             {
-                return RedirectToAction("Index", "Home");
+                return Unauthorized(); // fallback protection
             }
 
-            var roles = _context.Roles.ToList();
-            var users = _context.Users.ToList();
+            // Group expenses by month for the current user
+            var groupedData = _context.Expenses
+    .Where(e => e.UserId == userId)
+    .GroupBy(e => e.DateCreated.Month)
+    .Select(g => new
+    {
+        MonthNumber = g.Key,
+        Total = g.Sum(e => e.Value)
+    })
+    .ToList()
+    .OrderBy(g => g.MonthNumber) // safer than parsing strings
+    .Select(g => new
+    {
+        Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(g.MonthNumber),
+        Total = g.Total
+    })
+    .ToList();
 
-            var model = Tuple.Create(roles, users);
-            return View(model);
 
+            // Pass data to view
+            ViewBag.Months = groupedData.Select(g => g.Month).ToList();
+            ViewBag.MonthlyExpenses = groupedData.Select(g => g.Total).ToList();
 
-        }
-
-
-        [HttpGet]
-        public IActionResult AdminPanel()
-
-        {
-            var userRole = HttpContext.Session.GetString("UserRole");
-            if (string.IsNullOrEmpty(userRole) || userRole != "Admin")
-            {
-                return RedirectToAction("Index", "Admin"); // Or show unauthorized page
-            }
-
-            var roles = _context.Roles.ToList();
-            var users = _context.Users.ToList();
-
-            var model = Tuple.Create(roles, users);
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddRole(Role role)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Roles.Add(role);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("AdminPanel");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> AddUser(User user)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Users.Add(user);
-                await _context.SaveChangesAsync();
-            }
-            return RedirectToAction("AdminPanel");
+            return View();
         }
     }
 }
