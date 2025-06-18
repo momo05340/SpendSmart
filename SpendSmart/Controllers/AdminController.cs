@@ -7,6 +7,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
+
 namespace SpendSmart.Controllers
 {
     [Authorize]
@@ -52,8 +53,64 @@ namespace SpendSmart.Controllers
             // Pass data to view
             ViewBag.Months = groupedData.Select(g => g.Month).ToList();
             ViewBag.MonthlyExpenses = groupedData.Select(g => g.Total).ToList();
+            var users = _context.Users.ToList(); // Ensure this line fetches your users
+            return View(users); 
 
-            return View();
+
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateEditUserForm(User user)
+        {
+            if (!ModelState.IsValid)
+            {
+                // Optionally return with error message
+                return RedirectToAction("Users");
+            }
+
+            // If Id is 0, treat as new user
+            if (user.Id != 0)
+            {
+                user.DateCreated = DateTime.Now;
+                user.DateUpdated = DateTime.Now;
+                _context.Users.Add(user);
+            }
+            else
+            {
+                var existingUser = await _context.Users.FindAsync(user.Id);
+                if (existingUser == null)
+                {
+                    return NotFound();
+                }
+
+                // Update fields
+                existingUser.Username = user.Username;
+                existingUser.Email = user.Email;
+                existingUser.Password = user.Password;
+                existingUser.userrole = user.userrole;
+                existingUser.DateUpdated = user.DateUpdated;
+                existingUser.DateCreated = user.DateCreated;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index","Admin"); // Assumes your user list view is "Users"
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Users"); // Assumes your user list view is named "Users"
+        }
+
+
     }
 }
