@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using SpendSmart.Models;
 using System.Globalization;
-using System.Linq;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -54,7 +50,7 @@ namespace SpendSmart.Controllers
             ViewBag.Months = groupedData.Select(g => g.Month).ToList();
             ViewBag.MonthlyExpenses = groupedData.Select(g => g.Total).ToList();
             var users = _context.Users.ToList(); // Ensure this line fetches your users
-            return View(users); 
+            return View(users);
 
 
         }
@@ -93,7 +89,7 @@ namespace SpendSmart.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Admin"); // Assumes your user list view is "Users"
+            return RedirectToAction("Index", "Admin"); // Assumes your user list view is "Users"
         }
 
         [HttpPost]
